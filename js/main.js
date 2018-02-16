@@ -5,11 +5,10 @@ const MediumEditorColorButtons = require('medium-editor-colorpicker-buttons').ge
 const TextColorButtonClass = MediumEditorColorButtons.TextColorButtonClass
 
 const convertImage = () => {
-  html2canvas($(".image-container").get(0), {
-    // TODO: i completely have no ideas why i need this hack.
-    width: 799,
-    x: 527,
-  }).then((canvas) => $(".download-link").attr("href", canvas.toDataURL("image/png")));
+  const isMobile = /Mobi/i.test(navigator.userAgent);
+  // TODO: i completely have no ideas why i need this hack.
+  const options = isMobile ? {} : { width: 799, x: 527 };
+  html2canvas($(".image-container").get(0), options).then((canvas) => $(".download-link").attr("href", canvas.toDataURL("image/png")));
 };
 
 const setDraggableContainer = (element) => $(element).draggable({

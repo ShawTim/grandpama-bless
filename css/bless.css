@@ -1,6 +1,6 @@
 body {
   background: #242424;
-  height: 100%;
+  height: 1100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,7 +9,7 @@ body {
 body::after {
   content: '';
   background: url(./bg.jpg) no-repeat center;
-  background-size: 100% 100%;
+  background-size: cover;
   opacity: 0.3;
   top: 0;
   left: 0;
@@ -25,6 +25,7 @@ body::after {
   background-size: 100% 100%;
   width: 800px;
   height: 600px;
+  min-height: 600px;
 }
 
 .text-container {
@@ -127,6 +128,7 @@ body::after {
 
 .image-picker .image-uploader .upload-wrapper span {
   margin: 0 5px;
+  line-height: 1.2em;
 }
 
 .footer {
