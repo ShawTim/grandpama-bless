@@ -1,4 +1,5 @@
 import html2canvas from 'html2canvas';
+import interact from 'interactjs';
 import MediumEditor from "medium-editor";
 
 const MediumEditorColorButtons = require('medium-editor-colorpicker-buttons').get(MediumEditor);
@@ -11,13 +12,28 @@ const convertImage = () => {
   html2canvas($(".image-container").get(0), options).then((canvas) => $(".download-link").attr("href", canvas.toDataURL("image/png")));
 };
 
-const setDraggableContainer = (element) => $(element).draggable({
-  containment: "parent",
-  cancel: ".text-editor",
-  stop: () => convertImage(),
+const setDraggableContainer = (element) => interact(element).draggable({
+  restrict: {
+    restriction: "parent",
+    endOnly: false,
+  },
+  ignoreFrom: ".text-editor",
+  onmove: (e) => {
+    const ele = $(e.target);
+    const x = parseFloat(ele.attr("data-x") || 0) + e.dx;
+    const y = parseFloat(ele.attr("data-y") || 0) + e.dy;
+    ele.css({
+      transform: `translate(${x}px, ${y}px)`
+    }).attr({
+      "data-x": x,
+      "data-y": y,
+    })
+  },
+  onend: () => convertImage(),
 });
 
-const setResizableEditor = (element) => (element).resizable({
+// TODO: need to see whether jquery resizable can be replaced by interactjs
+const setResizableEditor = (element) => $(element).resizable({
   containment: $(".image-container"),
   autoHide: true,
   handles: "n, e, s, w, ne, se, sw, nw",
@@ -96,7 +112,7 @@ const createEditor = (editor) => {
 };
 
 $(function() {
-  setDraggableContainer($(".text-container"));
+  setDraggableContainer(".text-container");
   setResizableEditor($(".text-editor")).each((i, editor) => {
     createEditor(editor);
   });
@@ -104,7 +120,7 @@ $(function() {
     const container = $("<div></div>").addClass("text-container");
     const editor = $("<div></div>").addClass("text-editor").text("認同請分享");
     container.append(editor);
-    setDraggableContainer(container);
+    setDraggableContainer(container.get(0));
     createEditor(setResizableEditor(editor));
     $(".image-container").append(container);
   });

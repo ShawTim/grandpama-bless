@@ -1,0 +1,146 @@
+body {
+  background: #242424;
+  height: 1100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &::after {
+    content: '';
+    background: url(./bg.jpg) no-repeat center;
+    background-size: cover;
+    opacity: 0.3;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    z-index: -9999;
+  }
+}
+
+.image-container {
+  margin-top: 30px;
+  background: url(../images/pic01.jpg);
+  background-size: 100% 100%;
+  width: 800px;
+  height: 600px;
+  min-height: 600px;
+}
+
+.text-container {
+  padding: 8px;
+  display: inline-block;
+
+  &:hover {
+    padding: 5px;
+    border: 3px dashed #FFFFFF;
+  }
+}
+
+.text-editor {
+  width: 500px;
+  height: 200px;
+  font-size: 80px;
+  border: none;
+  color: red;
+  resize: both;
+  text-shadow: 3px 0 0 yellow, 3px 3px 0 yellow, 0 3px 0 yellow, -3px 3px 0 yellow, -3px 0 0 yellow, -3px -3px 0 yellow, 0 -3px 0 yellow, 3px -3px 0 yellow;
+
+  &:hover {
+    resize: both;
+    cursor: text;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    padding: 0;
+  }
+
+  h3 {
+    text-shadow: 5px 0 0 yellow, 5px 5px 0 yellow, 0 5px 0 yellow, -5px 5px 0 yellow, -5px 0 0 yellow, -5px -5px 0 yellow, 0 -5px 0 yellow, 5px -5px 0 yellow;
+  }
+
+  h4 {
+    text-shadow: 4px 0 0 yellow, 4px 4px 0 yellow, 0 4px 0 yellow, -4px 4px 0 yellow, -4px 0 0 yellow, -4px -4px 0 yellow, 0 -4px 0 yellow, 4px -4px 0 yellow;
+  }
+
+  h6 {
+    text-shadow: 2px 0 0 yellow, 2px 2px 0 yellow, 0 2px 0 yellow, -2px 2px 0 yellow, -2px 0 0 yellow, -2px -2px 0 yellow, 0 -2px 0 yellow, 2px -2px 0 yellow;
+  }
+
+  .ui-resizable-handle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: #FFFFFF;
+    cursor: se-resize;
+  }
+}
+
+.medium-editor-textcolor-box,
+.medium-editor-textcolor-pick-color {
+  background-color: #FFFFFF;
+}
+
+.add-text-button,
+.convert-button {
+  margin-top: 20px;
+
+  button {
+    font-size: 1.5em;
+  }
+}
+
+.image-picker {
+  display: flex;
+
+  img {
+    width: 160px;
+    height: 120px;
+    margin: 10px;
+    cursor: pointer;
+
+    &.selected {
+      margin: 5px;
+      border: 5px solid yellow;
+    }
+  }
+
+  .image-uploader {
+    > input {
+      display: none;
+    }
+
+    .upload-wrapper {
+      width: 154px;
+      height: 114px;
+      margin: 10px;
+      border: 3px dashed #FFFFFF;
+      cursor: pointer;
+      display: flex;
+      font-size: 48px;
+      color: red;
+      flex-wrap: wrap;
+      justify-content: center;
+      text-shadow: 2px 0 0 yellow, 2px 2px 0 yellow, 0 2px 0 yellow, -2px 2px 0 yellow, -2px 0 0 yellow, -2px -2px 0 yellow, 0 -2px 0 yellow, 2px -2px 0 yellow;
+
+      span {
+        margin: 0 5px;
+        line-height: 1.2em;
+      }
+    }
+  }
+}
+
+.footer {
+  margin-top: 20px;
+  color: #A7A7A7;
+  font-size: 12px;
+}
+
+@import url(./jquery-ui.theme.min.css);
+@import url(./medium-editor.min.css);
