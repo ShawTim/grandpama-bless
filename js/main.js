@@ -1,16 +1,10 @@
 import html2canvas from 'html2canvas';
 import interact from 'interactjs';
+import FileSaver from "file-saver";
 import MediumEditor from "medium-editor";
 
 const MediumEditorColorButtons = require('medium-editor-colorpicker-buttons').get(MediumEditor);
 const TextColorButtonClass = MediumEditorColorButtons.TextColorButtonClass
-
-const convertImage = () => {
-  const isMobile = /Mobi/i.test(navigator.userAgent);
-  // TODO: i completely have no ideas why i need this hack.
-  const options = isMobile ? {} : { width: 799, x: 527 };
-  html2canvas($(".image-container").get(0), options).then((canvas) => $(".download-link").attr("href", canvas.toDataURL("image/png")));
-};
 
 const setDraggableContainer = (element) => interact(element).draggable({
   restrict: {
@@ -29,7 +23,6 @@ const setDraggableContainer = (element) => interact(element).draggable({
       "data-y": y,
     })
   },
-  onend: () => convertImage(),
 });
 
 // TODO: need to see whether jquery resizable can be replaced by interactjs
@@ -41,7 +34,6 @@ const setResizableEditor = (element) => $(element).resizable({
 
 const setBackground = (img) => {
   $(".image-container").css("background-image", `url(${img})`);
-  convertImage();
 };
 
 const createEditor = (editor) => {
@@ -101,7 +93,6 @@ const createEditor = (editor) => {
     }
   });
   $(editor).blur((event) => {
-    convertImage();
     if (!event.target.innerText || !event.target.innerText.replace(/\n/g, "")) {
       me.destroy();
       $(editor).parent().remove();
@@ -142,5 +133,13 @@ $(function() {
       console.error(e);
     }
   });
-  convertImage();
+
+  $(".convert-button button").click((e) => {
+    const isMobile = /Mobi/i.test(navigator.userAgent);
+    // TODO: i completely have no ideas why i need this hack.
+    const options = isMobile ? {} : { width: 799, x: 527 };
+    html2canvas($(".image-container").get(0), options).then((canvas) => {
+      canvas.toBlob((blob) => FileSaver.saveAs(blob, "認同請分享.png"));
+    });
+  });
 });
