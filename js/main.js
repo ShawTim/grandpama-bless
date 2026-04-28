@@ -1,6 +1,6 @@
 import html2canvas from 'html2canvas';
 import interact from 'interactjs';
-import FileSaver from "file-saver";
+import { saveAs } from "file-saver";
 import MediumEditor from "medium-editor";
 
 const MediumEditorColorButtons = require('medium-editor-colorpicker-buttons').get(MediumEditor);
@@ -139,7 +139,7 @@ $(function() {
     // TODO: i completely have no ideas why i need this hack.
     const options = isMobile ? {} : { width: 799, x: 527 };
     html2canvas($(".image-container").get(0), options).then((canvas) => {
-      canvas.toBlob((blob) => FileSaver.saveAs(blob, "認同請分享.png"));
+      canvas.toBlob((blob) => saveAs(blob, "認同請分享.png"));
     });
   });
 });

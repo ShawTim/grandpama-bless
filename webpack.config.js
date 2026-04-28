@@ -1,43 +1,34 @@
-const webpack = require('webpack');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require("path");
+const webpack = require("webpack");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-  entry: './js/app.js',
+  entry: "./js/app.js",
   output: {
-    path: __dirname + '/docs',
-    filename: 'bundle.min.js'
+    path: path.resolve(__dirname, "docs"),
+    filename: "bundle.min.js",
+    clean: true
   },
   plugins: [
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery"
     }),
-    new CopyWebpackPlugin([
-      { from: '*.html' },
-      { from: '*.png' },
-      { from: '*.jpg' },
-      { from: './images/*.jpg' },
-      { from: './images/*.png' },
-    ])
+    new CopyPlugin({
+      patterns: [
+        { from: "*.html" },
+        { from: "*.png", noErrorOnMissing: true },
+        { from: "*.jpg", noErrorOnMissing: true },
+        { from: "images", to: "images" }
+      ]
+    })
   ],
   module: {
-    loaders: [{
-      test: /\.(s)*css$/,
-      loaders: [
-        'style-loader',
-        'css-loader',
-        'sass-loader'
-      ]
-    }, {
-      test: /\.(jpg|png)$/,
-      loaders: [
-        'url-loader'
-      ]
-    }, {
-      test: /\.js$/,
-      loaders: [
-        'babel-loader?presets[]=es2015'
-      ]
-    }]
+    rules: [
+      {
+        test: /\.(s)*css$/,
+        use: ["style-loader", "css-loader", "sass-loader"]
+      }
+    ]
   }
-}
+};
